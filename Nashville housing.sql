@@ -13,6 +13,8 @@ FROM Nashville_housing.nashvillehousing
 UPDATE Nashville_housing.nashvillehousing  
 SET PropertyAddress = NULLIF(PropertyAddress, '')
 
+
+--------------------------------------------------------------------------------------------------------------------------
 -- Creating a self join to get a new column with address to add to the null unique ID's
 
 SELECT 
@@ -38,6 +40,8 @@ SET a.PropertyAddress = IFNULL(a.PropertyAddress,b.PropertyAddress)
 WHERE a.PropertyAddress is null
 
 
+
+--------------------------------------------------------------------------------------------------------------------------
 -- Breaking out addresses into individual columns (Address, City, State)
 SELECT PropertyAddress
 FROM Nashville_housing.nashvillehousing
@@ -86,7 +90,11 @@ ADD OwnerSplitState NVARCHAR(255);
 UPDATE Nashville_housing.nashvillehousing
 SET OwnerSplitState = SUBSTRING_INDEX(OwnerAddress,',',-1)
 
+
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Changing Y and N to Yes and No in Sold as Vacant column
+
 SELECT DISTINCT(SoldAsVacant), Count(SoldAsVacant)
 FROM Nashville_housing.nashvillehousing
 GROUP BY SoldAsVacant
@@ -107,12 +115,15 @@ SET SoldAsVacant = CASE
     ELSE SoldAsVacant 
 END ;
 
+--------------------------------------------------------------------------------------------------------------------------
 -- Searching for Duplicates on UniqueID
 SELECT UniqueID,COUNT(UniqueID)
 FROM Nashville_housing.nashvillehousing
 group by UniqueID
 Having count(*)>1;
 
+
+--------------------------------------------------------------------------------------------------------------------------
 -- Deleting unused Columns
 SELECT *
 FROM Nashville_housing.nashvillehousing
