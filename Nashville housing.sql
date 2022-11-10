@@ -15,7 +15,7 @@ SET PropertyAddress = NULLIF(PropertyAddress, '')
 
 
 --------------------------------------------------------------------------------------------------------------------------
--- Creating a self join to get a new column with address to add to the null unique ID's
+-- Creating a self join to get a new column with address to add to the null property addresses
 
 SELECT 
     a.ParcelID,
